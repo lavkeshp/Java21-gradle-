@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'org.sonarqube' version '4.4.1.3373'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+group = 'com.example'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "SecureToDoJavaApp"
+        property "sonar.projectName", "Secure Java ToDo App"
+        property "sonar.host.url", "http://your-sonarqube-server:9000"
+    }
+}
